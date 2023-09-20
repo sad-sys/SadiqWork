@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<div class="container">
+    <form action="/aLevelPost" method="post">
+        <input autocomplete="off" type="number" autofocus name="score" placeholder="Enter your UCAS score">
+        <button type="submit">Calculate</button>
+    </form>
+    {% if scoreCalc == True %}
+        <p>Your score is {{ score }}</p>
+    {% endif %}
+    <svg width
+</div>
+
+{% endblock %}
