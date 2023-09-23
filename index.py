@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+from gradeData import *
 
 ucatDataArr = [2120,2250,2340,2420,2500,2570,2660,2750,2880]
 
@@ -37,10 +38,15 @@ def aLevel():
 def aLevelQuant():
     if request.method == "POST" or request.method == "GET":
         print (request.method)
-        score = int(request.form.get("score"))
-        print (f"Score is {score}")
-        scoreCalc = True
-        return render_template("aLevelQuant.html", scoreCalc= scoreCalc)
+        score = request.form.get("score")
+        if score:
+            score = int(score)
+            print (f"Score is {score}")
+            scoreCalc = True
+        else:
+            score = "Not entered"
+            scoreCalc = True
+        return render_template("aLevelQuant.html", scoreCalc= scoreCalc, score = score)
 
 def compareScore(score, rankings):
     for i in range(0,len(rankings)):
