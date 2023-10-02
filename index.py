@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 from gradeData import *
+from aLevelFunctions import *
 
 ucatDataArr = [2120,2250,2340,2420,2500,2570,2660,2750,2880]
 
@@ -32,21 +33,25 @@ def ucatPost():
 def aLevel():
     if request.method == "POST":
         print ("POST, ALEVEL")
-        return render_template("aLevelQuant.html")
+        return render_template("aLevelQuant.html", subjects = subjects, resultsAbsoluteValueArr = resultsAbsoluteValueArr)
     
 @app.route("/aLevelPost", methods = ["POST","GET"])
 def aLevelQuant():
     if request.method == "POST" or request.method == "GET":
         print (request.method)
-        score = request.form.get("score")
-        if score:
-            score = int(score)
-            print (f"Score is {score}")
+        subject = request.form.get("subject")
+        subject,placeHolder = getSubjectandResults(subject,subjects,resultsAbsoluteValueArr)
+        grade   = request.form.get("grade")
+        if subject:
             scoreCalc = True
+            getChartSuperFunction(subject,grade,subjects,resultsAbsoluteValueArr)
+            img_b64 = plot_to_img()
+            print ("Done")
         else:
-            score = "Not entered"
-            scoreCalc = True
-        return render_template("aLevelQuant.html", scoreCalc= scoreCalc, score = score)
+            scoreCalc = False
+            subject = "Not entered"
+            print ("Not done")
+        return render_template("aLevelQuant.html", subjects = subjects, resultsAbsoluteValueArr = resultsAbsoluteValueArr, scoreCalc = scoreCalc, subject = subject,img_b64 = img_b64, grade = grade)
 
 def compareScore(score, rankings):
     for i in range(0,len(rankings)):
