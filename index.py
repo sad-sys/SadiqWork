@@ -40,18 +40,18 @@ def aLevelQuant():
     if request.method == "POST" or request.method == "GET":
         print (request.method)
         subject = request.form.get("subject")
-        subject,placeHolder = getSubjectandResults(subject,subjects,resultsAbsoluteValueArr)
         grade   = request.form.get("grade")
         if subject:
+            subject,placeHolder = getSubjectandResults(subject,subjects,resultsAbsoluteValueArr)
             scoreCalc = True
-            getChartSuperFunction(subject,grade,subjects,resultsAbsoluteValueArr)
+            gradePercentileLow, gradePercentileHigh = getChartSuperFunction(subject,grade,subjects,resultsAbsoluteValueArr)
             img_b64 = plot_to_img()
             print ("Done")
         else:
             scoreCalc = False
             subject = "Not entered"
             print ("Not done")
-        return render_template("aLevelQuant.html", subjects = subjects, resultsAbsoluteValueArr = resultsAbsoluteValueArr, scoreCalc = scoreCalc, subject = subject,img_b64 = img_b64, grade = grade)
+        return render_template("aLevelQuant.html", subjects = subjects, resultsAbsoluteValueArr = resultsAbsoluteValueArr, scoreCalc = scoreCalc, subject = subject,img_b64 = img_b64, grade = grade, gradePercentileLow = gradePercentileLow, gradePercentileHigh = gradePercentileHigh)
 
 def compareScore(score, rankings):
     for i in range(0,len(rankings)):
