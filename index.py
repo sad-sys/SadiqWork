@@ -3,6 +3,9 @@ from gradeData import *
 from aLevelFunctions import *
 
 ucatDataArr = [2120,2250,2340,2420,2500,2570,2660,2750,2880]
+numberOfGrades = []
+chosenGrades   = []
+images = []
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
 app.debug = True
@@ -10,18 +13,21 @@ app.debug = True
 @app.route("/" ,methods = ["GET"])
 def index():
     if request.method == "GET":
+        numberOfGrades = []
         print("GET")
         return render_template("sizeUp.html")
     
 @app.route("/ucat", methods = ["POST","GET"])    
 def ucatQuant():
     if request.method == "POST" or request.method == "GET":
+        numberOfGrades = []
         print(request.method)
         return render_template("ucatQuant.html", ucatDataArr=ucatDataArr)
 
 @app.route("/ucatPost", methods = ["POST","GET"])
 def ucatPost():
     if request.method == "POST" or request.method == "GET":
+        numberOfGrades = []
         print(request.method)
         score = int(request.form.get("score"))
         decile = compareScore(score, ucatDataArr)
@@ -32,27 +38,36 @@ def ucatPost():
 @app.route("/aLevel", methods = ["POST","GET"])
 def aLevel():
     if request.method == "POST":
+        
+        numberOfGrades = []
         print ("POST, ALEVEL")
         return render_template("aLevelQuant.html", subjects = subjects, resultsAbsoluteValueArr = resultsAbsoluteValueArr)
     
 @app.route("/aLevelPost", methods = ["POST","GET"])
 def aLevelQuant():
     if request.method == "POST" or request.method == "GET":
+
         print (request.method)
+
         subject = request.form.get("subject")
-        subject = subject.upper()
         grade   = request.form.get("grade")
+        subject = subject.upper()
+        grade   = grade.upper()
+
         if subject:
             subject,placeHolder = getSubjectandResults(subject,subjects,resultsAbsoluteValueArr)
             scoreCalc = True
             gradePercentileLow, gradePercentileHigh = getChartSuperFunction(subject,grade,subjects,resultsAbsoluteValueArr)
+            numberOfGrades.append(subject)
+            print ("numberOfGrades is ",numberOfGrades)
             img_b64 = plot_to_img()
+            images.append(img_b64)
             print ("Done")
         else:
             scoreCalc = False
             subject = "Not entered"
             print ("Not done")
-        return render_template("aLevelQuant.html", subjects = subjects, resultsAbsoluteValueArr = resultsAbsoluteValueArr, scoreCalc = scoreCalc, subject = subject,img_b64 = img_b64, grade = grade, gradePercentileLow = gradePercentileLow, gradePercentileHigh = gradePercentileHigh)
+        return render_template("aLevelQuant.html", subjects = subjects, resultsAbsoluteValueArr = resultsAbsoluteValueArr, scoreCalc = scoreCalc, subject = subject,img_b64 = img_b64, grade = grade, gradePercentileLow = gradePercentileLow, gradePercentileHigh = gradePercentileHigh, numberOfGrades = numberOfGrades, images = images)
 
 def compareScore(score, rankings):
     for i in range(0,len(rankings)):

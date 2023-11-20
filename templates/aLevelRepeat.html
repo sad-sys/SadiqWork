@@ -1,0 +1,14 @@
+{% block body %}
+<div class="container" id = "aLevelForm">
+    <form action="/aLevelPost" method="post">
+        <h1>A-Level Quantifier</h1>
+        <input autocomplete="off"  name="subject" placeholder="Enter your subject">
+        <input autocomplete="off" name="grade" placeholder="Enter your grade">
+        <button type = "submit">Calculate</button>
+    </form>
+    {% if scoreCalc == True %}
+        <p>Your subject is {{ subject }}, with a grade of {{ grade }}</p>
+        <img src="data:image/png;base64,{{img_b64}}" class="blog-image">
+        <p> Your grade percentile is between {{gradePercentileLow}}% and {{gradePercentileHigh}}%</p>
+    {% endif %}
+{% endblock %}

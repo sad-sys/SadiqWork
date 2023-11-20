@@ -1,17 +1,35 @@
 {% extends "layout.html" %}
 {% block body %}
-
-<div class="container">
-    <form action="/aLevelPost" method="post">
-        <input autocomplete="off"  name="subject" placeholder="Enter your subject">
-        <input autocomplete="off" name="grade" placeholder="Enter your grade">
-        <button type = "submit">Calculate</button>
-    </form>
-    {% if scoreCalc == True %}
-        <p>Your subject is {{ subject }}, with a grade of {{ grade }}</p>
-        <img src="data:image/png;base64,{{img_b64}}" class="blog-image">
-        <p> Your grade percentile is between {{gradePercentileLow}} and {{gradePercentileHigh}}</p>
+{% if numberOfGrades|length > 1%}
+    <div class="container" id = "aLevelForm">
+        <form action="/aLevelPost" method="post">
+            <h1>A-Level Quantifier</h1>
+            <input autocomplete="off"  name="subject" placeholder="Enter your subject">
+            <input autocomplete="off" name="grade" placeholder="Enter your grade">
+            <button type = "submit">Calculate</button>
+        </form>
+    {% for numberOfGradesSubject in numberOfGrades %}
+    <div class="container" id = "aLevelForm">
+        {% if scoreCalc == True %}
+            <p>Your subject is {{ numberOfGradesSubject }}, with a grade of {{ grade }}</p>
+            <img src="data:image/png;base64,{{images[loop.index0]}}" class="blog-image" style="display: block; margin: 0 auto; text-align: center;">
+            <p> Your grade percentile is between {{gradePercentileLow}}% and {{gradePercentileHigh}}%</p>
+        {% endif %}
+    {% endfor %}
+{%else%}
+    <div class="container" id = "aLevelForm">
+        <form action="/aLevelPost" method="post">
+            <h1>A-Level Quantifier</h1>
+            <input autocomplete="off"  name="subject" placeholder="Enter your subject">
+            <input autocomplete="off" name="grade" placeholder="Enter your grade">
+            <button type = "submit">Calculate</button>
+        </form>
+        {% if scoreCalc == True %}
+            <p>Your subject is {{ numberOfGrades[0] }}, with a grade of {{ grade }}</p>
+            <img src="data:image/png;base64,{{images[0]}}" class="blog-image" style="display: block; margin: 0 auto; text-align: center;">
+            <p> Your grade percentile is between {{gradePercentileLow}}% and {{gradePercentileHigh}}%</p>
+        {% endif %}
     {% endif %}
-</div>
-
 {% endblock %}
+</body>
+</html>

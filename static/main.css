@@ -17,14 +17,6 @@ h1 {
     margin: 0;
 }
 
-.container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #252525; /* Darker background for containers */
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1); /* Inverted shadow for a glowing effect */
-}
 
 form {
     text-align: center;
