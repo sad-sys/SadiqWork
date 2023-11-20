@@ -40,6 +40,7 @@ def aLevelQuant():
     if request.method == "POST" or request.method == "GET":
         print (request.method)
         subject = request.form.get("subject")
+        subject = subject.upper()
         grade   = request.form.get("grade")
         if subject:
             subject,placeHolder = getSubjectandResults(subject,subjects,resultsAbsoluteValueArr)
