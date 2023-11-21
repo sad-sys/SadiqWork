@@ -6,6 +6,7 @@
             <h1>A-Level Quantifier</h1>
             <input autocomplete="off"  name="subject" placeholder="Enter your subject">
             <input autocomplete="off" name="grade" placeholder="Enter your grade">
+            <p></p>
             <button type = "submit">Calculate</button>
         </form>
     {% for numberOfGradesSubject in numberOfGrades %}
@@ -13,7 +14,7 @@
         {% if scoreCalc == True %}
             <p>Your subject is {{ numberOfGradesSubject }}, with a grade of {{ grade }}</p>
             <img src="data:image/png;base64,{{images[loop.index0]}}" class="blog-image" style="display: block; margin: 0 auto; text-align: center;">
-            <p> Your grade percentile is between {{gradePercentileLow}}% and {{gradePercentileHigh}}%</p>
+            <p> Your grade percentile is between {{chosenGradesLow[loop.index0]}}% and {{chosenGradesHigh[loop.index0]}}%</p>
         {% endif %}
     {% endfor %}
 {%else%}
@@ -22,12 +23,13 @@
             <h1>A-Level Quantifier</h1>
             <input autocomplete="off"  name="subject" placeholder="Enter your subject">
             <input autocomplete="off" name="grade" placeholder="Enter your grade">
+            <p></p>
             <button type = "submit">Calculate</button>
         </form>
         {% if scoreCalc == True %}
             <p>Your subject is {{ numberOfGrades[0] }}, with a grade of {{ grade }}</p>
             <img src="data:image/png;base64,{{images[0]}}" class="blog-image" style="display: block; margin: 0 auto; text-align: center;">
-            <p> Your grade percentile is between {{gradePercentileLow}}% and {{gradePercentileHigh}}%</p>
+            <p> Your grade percentile is between {{chosenGradesLow[0]}}% and {{chosenGradesHigh[0]}}%</p>
         {% endif %}
     {% endif %}
 {% endblock %}

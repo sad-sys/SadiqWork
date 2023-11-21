@@ -4,7 +4,8 @@ from aLevelFunctions import *
 
 ucatDataArr = [2120,2250,2340,2420,2500,2570,2660,2750,2880]
 numberOfGrades = []
-chosenGrades   = []
+chosenGradesLow   = []
+chosenGradesHigh  = []
 images = []
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
@@ -59,15 +60,18 @@ def aLevelQuant():
             scoreCalc = True
             gradePercentileLow, gradePercentileHigh = getChartSuperFunction(subject,grade,subjects,resultsAbsoluteValueArr)
             numberOfGrades.append(subject)
+            print ("Placeholder is ", placeHolder)
             print ("numberOfGrades is ",numberOfGrades)
             img_b64 = plot_to_img()
+            chosenGradesLow.append(gradePercentileLow)
+            chosenGradesHigh.append(gradePercentileHigh)
             images.append(img_b64)
             print ("Done")
         else:
             scoreCalc = False
             subject = "Not entered"
             print ("Not done")
-        return render_template("aLevelQuant.html", subjects = subjects, resultsAbsoluteValueArr = resultsAbsoluteValueArr, scoreCalc = scoreCalc, subject = subject,img_b64 = img_b64, grade = grade, gradePercentileLow = gradePercentileLow, gradePercentileHigh = gradePercentileHigh, numberOfGrades = numberOfGrades, images = images)
+        return render_template("aLevelQuant.html", subjects = subjects, resultsAbsoluteValueArr = resultsAbsoluteValueArr, scoreCalc = scoreCalc, subject = subject,img_b64 = img_b64, grade = grade, gradePercentileLow = gradePercentileLow, gradePercentileHigh = gradePercentileHigh, numberOfGrades = numberOfGrades, images = images, chosenGradesLow = chosenGradesLow, chosenGradesHigh = chosenGradesHigh)
 
 def compareScore(score, rankings):
     for i in range(0,len(rankings)):
